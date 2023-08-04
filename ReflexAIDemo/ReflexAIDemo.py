@@ -1,4 +1,5 @@
 import reflex as rx
+from loguru import logger
 import openai
 import os
 
@@ -18,14 +19,24 @@ class State(rx.State):
     def get_image(self):
         """Get the image from the prompt."""
         if self.prompt == "":
+            logger.warning("Prompt is empty.")
             return rx.window_alert("Prompt Empty")
 
+        logger.info("Starting image processing.")
         self.processing, self.complete = True, False
         yield
-        response = openai.Image.create(prompt=self.prompt, n=1, size="512x512")
-        self.image_url = response["data"][0]["url"]
-        self.processing, self.complete = False, True
-        
+
+        try:
+            response = openai.Image.create(prompt=self.prompt, n=1, size="512x512")
+            self.image_url = response["data"][0]["url"]
+            logger.success("Image successfully created.")
+        except openai.error.OpenAIError as e:
+            logger.error(f"An error occurred while interacting with the OpenAI API: {e}")
+            self.image_url = None  # You can handle the error as needed here
+        finally:
+            self.processing, self.complete = False, True
+            logger.info("Image processing complete.")
+
 
 def index():
     return rx.center(

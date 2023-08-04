@@ -10,6 +10,7 @@ readme = "README.md"
 python = "^3.11"
 reflex = "^0.2.3"
 openai = "^0.27.8"
+loguru = "^0.7.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"
