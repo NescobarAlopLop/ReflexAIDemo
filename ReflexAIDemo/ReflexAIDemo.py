@@ -4,20 +4,18 @@ import openai
 import os
 
 # Get the value of an environment variable named 'MY_VARIABLE'
-value_from_env_variable = os.getenv('OPEN_AI_API')
-value_from_env_variable = os.getenv('OPENAI_API_KEY')
+value_from_env_variable = os.getenv("OPEN_AI_API")
+value_from_env_variable = os.getenv("OPENAI_API_KEY")
 openai.api_key = value_from_env_variable
 
 
 class State(rx.State):
-    """The app state."""
     prompt = ""
     image_url = ""
     processing = False
     complete = False
 
     def get_image(self):
-        """Get the image from the prompt."""
         if self.prompt == "":
             logger.warning("Prompt is empty.")
             return rx.window_alert("Prompt Empty")
@@ -51,11 +49,11 @@ def index():
             ),
             rx.cond(
                 State.complete,
-                     rx.image(
-                         src=State.image_url,
-                         height="25em",
-                         width="25em",
-                    )
+                rx.image(
+                    src=State.image_url,
+                    height="25em",
+                    width="25em",
+                ),
             ),
             padding="2em",
             shadow="lg",
