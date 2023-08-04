@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "reflexaidemo"
+version = "0.1.0"
+description = "demo, to test the capabilities for reflex"
+authors = ["gkesaev-r7 <george_kesaev@rapid7.com>"]
+license = "Apache License 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+reflex = "^0.2.3"
+openai = "^0.27.8"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+isort = "^5.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
